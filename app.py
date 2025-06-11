@@ -1,7 +1,7 @@
 import streamlit as st
 import pandas as pd
 import numpy as np
-import joblib
+import pickle
 import plotly.express as px
 import traceback
 import base64
@@ -89,8 +89,10 @@ st.markdown("<h4 style='text-align: center; color: white;'>Protect your network 
 
 # -------------------- Load Models -------------------- #
 try:
-    binary_model = joblib.load("binary_model.joblib")
-    attack_model = joblib.load("attack_model.joblib")
+    with open("binary_model.joblib", 'rb') as f:
+        binary_model = pickle.load(f)
+    with open("attack_model.joblib", 'rb') as f:
+        attack_model = pickle.load(f)
 except Exception as e:
     st.error(f"❌ Failed to load models: {e}")
     st.error(traceback.format_exc())
